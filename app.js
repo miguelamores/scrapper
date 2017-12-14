@@ -23,6 +23,14 @@ app.get('/scrape', function(req, res){
     fs.appendFileSync('hackernews.txt',rank + '\n' + title + '\n' + link + '\n');
   });
 
+  // $('tbody').each(function( index ) {
+  //   var rank = $(this).find('td.title > span.rank').text().trim();
+  //   var title = $(this).find('td.title > a').text().trim();
+  //   //var score = $(this).find('td.subtext > span.score').text().trim();
+  //   var link = $(this).find('td.title > a').attr('href');
+  //   fs.appendFileSync('hackernews.txt',rank + '\n' + title + '\n' + link + '\n');
+  // });
+
 });
   //All the web scraping magic will happen here
 
