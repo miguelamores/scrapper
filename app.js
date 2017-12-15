@@ -16,20 +16,24 @@ app.get('/scrape', function(req, res){
 
   var $ = cheerio.load(body);
 
-  $('tr.athing:has(td.votelinks)').each(function( index ) {
+  
+  /*$('tr.athing:has(td.votelinks)').each(function( index ) {
     var rank = $(this).find('td.title > span.rank').text().trim();
     var title = $(this).find('td.title > a').text().trim();
     var link = $(this).find('td.title > a').attr('href');
     fs.appendFileSync('hackernews.txt',rank + '\n' + title + '\n' + link + '\n');
-  });
+  });*/
 
-  // $('tbody').each(function( index ) {
-  //   var rank = $(this).find('td.title > span.rank').text().trim();
-  //   var title = $(this).find('td.title > a').text().trim();
-  //   //var score = $(this).find('td.subtext > span.score').text().trim();
-  //   var link = $(this).find('td.title > a').attr('href');
-  //   fs.appendFileSync('hackernews.txt',rank + '\n' + title + '\n' + link + '\n');
-  // });
+
+  $('table.itemlist > tbody > tr').each(function( index ) {
+    var rank = $(this).find('tr.athing > td.title > span.rank').text().trim();
+    var title = $(this).find('tr.athing > td.title > a').text().trim();
+    //var link = $(this).find('tr.athing > td.title > a').attr('href');
+
+    var score = $(this).find('tr > td.subtext > span.score').text().trim();
+    var comments = $(this).find('tr > td.subtext > a:contains("comments")').text().trim();
+    fs.appendFileSync('hackernews.txt',rank + '\n' + title + '\n' + score + '\n' + comments + '\n');
+  });
 
 });
   //All the web scraping magic will happen here
