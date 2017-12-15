@@ -36,8 +36,19 @@ app.get('/scrape', function(req, res){
         element.score = score;
         element.comments = comments;
       }
-        console.log("index "+ i + "indexsubel "+ index);
-    });
+
+    hackerNews.sort(function(a, b){
+      if (a.score > b.score) {
+        return 1;
+      }
+      if (a.score < b.score) {
+        return -1;
+      }
+      // a must be equal to b
+      //return 0;
+    })
+
+  });
 
   });
 
