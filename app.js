@@ -32,23 +32,14 @@ app.get('/scrape', function(req, res){
     fs.appendFileSync('hackernews.txt',index + '\n' + score + '\n' + comments + '\n');
 
     hackerNews.forEach(function(element, i) {
+      console.log(element.title +" length: " + element.title.split(" ").length);
       if (i == index) {
         element.score = score;
         element.comments = comments;
       }
+    });
 
-    hackerNews.sort(function(a, b){
-      if (a.score > b.score) {
-        return 1;
-      }
-      if (a.score < b.score) {
-        return -1;
-      }
-      // a must be equal to b
-      //return 0;
-    })
 
-  });
 
   });
 
@@ -70,6 +61,11 @@ app.get('/scrape', function(req, res){
   //
   //
   // });
+  hackerNews.sort(function(a, b){
+    var scoreA = (a.score).match(/\d+/g);
+    var scoreB = (b.score).match(/\d+/g);
+    return scoreA - scoreB;
+  })
 
   res.send(hackerNews);
 
