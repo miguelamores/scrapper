@@ -25,7 +25,7 @@ request("https://news.ycombinator.com/news", function(error, response, body) {
     //$('td.subtext:has(span.score)').each(function( index ) {
     $('td.subtext').each(function( index ) {
       var score = $(this).find('span.score').text().trim();
-      var comments = $(this).find('a:contains("comments")').text().trim();
+      var comments = $(this).find('a:contains("comment")').text().trim();
       //fs.appendFileSync('hackernews.txt',index + '\n' + score + '\n' + comments + '\n');
 
       hackerNews.forEach(function(element, i) {
@@ -48,11 +48,12 @@ app.get('/scrape/:filter', function(req, res){
   if (req.params.filter == "more") {
 
     hackerNewsCopy.forEach(function(element, i) {
-      console.log(element.title +" length: " + element.title.split(" ").length);
+      //console.log(element.title +" length: " + element.title.split(" ").length);
       if (element.title.split(" ").length <= 5) {
         console.log("element: " +element.title);
         hackerNewsCopy.splice(i, 1);
       }
+      console.log("no elimina: " +element.title);
     });
 
     hackerNewsCopy.sort(function(a, b){
@@ -61,12 +62,17 @@ app.get('/scrape/:filter', function(req, res){
       return scoreA - scoreB;
     })
   } else {
+
     hackerNewsCopy.forEach(function(element, i) {
       console.log(element.title +" length: " + element.title.split(" ").length);
+      //console.log(element.title + ":    " +i);
       if (element.title.split(" ").length > 5) {
-        console.log("element: " +element.title);
+        //console.log("element: " +element.title);
         hackerNewsCopy.splice(i, 1);
+      } else {
+        //console.log("no elimina: " +element.title);
       }
+
     });
 
     hackerNewsCopy.sort(function(a, b){
@@ -78,7 +84,7 @@ app.get('/scrape/:filter', function(req, res){
 
 
   res.send(hackerNewsCopy);
-  hackerNewsCopy = [];
+  //hackerNewsCopy = [];
   //All the web scraping magic will happen here
 
 })
